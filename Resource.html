@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monad Resources Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .badge {
+      display: inline-block;
+      font-size: 0.82em;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 8px;
+      margin-left: 7px;
+      vertical-align: middle;
+      color: #fff;
+      background: #f8d210;
+      letter-spacing: 0.02em;
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.08);
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .badge-official {
+      background: #5a49b5;
+      color: #fff;
+    }
+    .badge-new {
+      background: #f8d210;
+      color: #3c237e;
+    }
+    .fade-section {
+      scroll-margin-top: 90px;
+      border-top: 1.5px solid rgba(151,130,255,0.18);
+      padding-top: 34px;
+      margin-top: 18px;
+    }
+
+    /* Navigation Bar */
+    .main-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--header-bg);
+      box-shadow: var(--shadow);
+      z-index: 1100;
+      border-bottom: 1.5px solid rgba(248, 210, 16, 0.15);
+      transition: background 0.3s;
+    }
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 18px;
+      height: 60px;
+    }
+    .nav-logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #f8d210;
+      letter-spacing: 0.06em;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      height: 60px;
+      margin-right: 32px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      list-style: none;
+      margin: 0 auto;
+      padding: 0;
+      flex: 1 1 auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-links a {
+      color: #f8d210 !important;
+      text-decoration: none !important;
+      font-weight: 600;
+      font-size: 1.05rem;
+      padding: 7px 10px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a:focus {
+      background: var(--hover-bg);
+      color: #f8d210;
+      text-decoration: none;
+    }
+    .mode-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.45rem;
+      color: #f8d210;
+      margin-left: 32px;
+      transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+      border-radius: 50%;
+      padding: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 40px;
+    }
+    .mode-toggle:hover, .mode-toggle:focus {
+      background: var(--hover-bg);
+      color: #fff;
+      box-shadow: 0 2px 8px 0 rgba(230,194,0,0.10);
+      outline: none;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 12px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: var(--header-bg);
+        flex-direction: column;
+        width: 180px;
+        box-shadow: 0 8px 24px 0 rgba(31,38,135,0.17);
+        padding: 18px 0;
+        z-index: 1200;
+      }
+      .nav-links.open {
+        display: flex;
+      }
+      .nav-toggle {
+        display: flex;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      margin-top: 80px;
+      margin-bottom: 36px;
+      text-align: center;
+      color: var(--text-color);
+      padding: 32px 10px 24px 10px;
+      background: linear-gradient(120deg, var(--bg-gradient-start) 60%, var(--bg-gradient-end) 100%);
+      border-radius: 22px;
+      box-shadow: 0 4px 24px 0 rgba(131,110,249,0.07);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+      color: #f8d210;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .hero-tagline {
+      font-size: 1.2rem;
+      margin-bottom: 24px;
+      color: var(--text-color);
+      opacity: 0.92;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--accent);
+      color: #3c237e;
+      font-weight: 700;
+      font-size: 1.09rem;
+      padding: 12px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 2px 16px 0 rgba(248,210,16,0.10);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .hero-cta:hover {
+      background: #ffe84d;
+      color: #3c237e;
+      transform: translateY(-2px) scale(1.04);
+    }
+
+    /* Dark Mode */
+    body.dark {
+      --bg-gradient-start: #181729;
+      --bg-gradient-end: #23213a;
+      --text-color: #e6e6e6;
+      --header-bg: #23213a;
+      --hover-bg: rgba(248, 210, 16, 0.10);
+      --box-bg: rgba(255, 255, 255, 0.06);
+      --accent: #f8d210;
+      --glass-blur: 12px;
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.16);
+    }
+    body.dark .hero {
+      background: linear-gradient(120deg, #23213a 60%, #181729 100%);
+      color: #e6e6e6;
+    }
+    body.dark .hero-title {
+      color: #f8d210;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.13);
+    }
+    body.dark .hero-cta {
+      color: #23213a;
+    }
+    body.dark .main-nav, body.dark header {
+      background: #23213a;
+      color: #f8d210;
+    }
+    body.dark .nav-links li a:hover, body.dark .nav-links li a:focus {
+      background: var(--hover-bg);
+      color: #f8d210;
+    }
+    body.dark .container {
+      background: none;
+    }
+    body.dark .link-box {
+      background: rgba(255,255,255,0.05);
+      box-shadow: 0 4px 18px 0 rgba(31,38,135,0.15);
+    }
+    body.dark #made-by {
+      background: linear-gradient(120deg, #23213a 60%, #181729 100%);
+      color: #e6e6e6;
+    }
+    body.dark .author-link {
+      color: #f8d210;
+    }
+
+    /* Back to Top Button */
+    #back-to-top {
+      display: none;
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 1500;
+      background: var(--accent);
+      color: #3c237e;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      box-shadow: 0 2px 12px 0 rgba(248,210,16,0.13);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    #back-to-top:hover {
+      background: #ffe84d;
+      transform: scale(1.07);
+    }
+    @media (max-width: 600px) {
+      #back-to-top {
+        right: 12px;
+        bottom: 12px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+    }
+
+    :root {
+      --bg-gradient-start: rgba(131, 110, 249, 1);
+      --bg-gradient-end: rgba(151, 130, 255, 1);
+      --accent: #f8d210;
+      --text-color: #fff;
+      --header-bg: rgba(131, 110, 249, 1);
+      --hover-bg: rgba(255, 255, 255, 0.2);
+      --box-bg: rgba(255, 255, 255, 0.1);
+      --glass-blur: 12px;
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.20);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', 'Open Sans', Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(120deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      color: var(--text-color);
+      font-family: 'Inter', 'Open Sans', Arial, sans-serif;
+      line-height: 1.7;
+      padding-top: 110px;
+      min-height: 100vh;
+      letter-spacing: 0.01em;
+    }
+
+    header {
+      background: var(--header-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 28px 10px 18px 10px;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+      border-bottom: 1.5px solid rgba(248, 210, 16, 0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #f8d210;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.13);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 18px;
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    @media (min-width: 700px) {
+      .sections-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 42px;
+      }
+    }
+
+    section {
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    section h2 {
+      margin-bottom: 18px;
+      font-size: 1.35rem;
+      color: #f8d210;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.11);
+    }
+
+    .link-box {
+      padding: 32px 22px 22px 22px;
+      background: var(--box-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      margin: 0 auto 36px auto;
+      text-align: center;
+      width: 100%;
+      max-width: 560px;
+      backdrop-filter: blur(var(--glass-blur));
+      border: 1.5px solid rgba(255,255,255,0.10);
+      transition: box-shadow 0.25s, transform 0.25s;
+      will-change: box-shadow, transform;
+      position: relative;
+      overflow: visible;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1), box-shadow 0.25s, background 0.25s;
+    }
+    .link-box.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .link-box:hover {
+      box-shadow: 0 18px 36px 0 rgba(31, 38, 135, 0.22);
+      transform: translateY(-4px) scale(1.03);
+      background: var(--hover-bg);
+    }
+
+    .link-box a {
+      display: block;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s, transform 0.2s;
+      padding: 16px 18px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      font-size: 1.08rem;
+      font-weight: 500;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      background: rgba(255,255,255,0.03);
+      border: 1.2px solid rgba(248,210,16,0.07);
+      letter-spacing: 0.01em;
+    }
+    .link-box a:last-child {
+      margin-bottom: 0;
+    }
+    .link-box a:hover,
+    .link-box a:focus {
+      background: var(--hover-bg);
+      color: #f8d210;
+      transform: translateY(-2px) scale(1.03);
+      outline: none;
+      box-shadow: 0 2px 16px 0 rgba(248,210,16,0.09);
+      border: 1.5px solid var(--accent);
+    }
+
+    .link-box p {
+      font-size: 1.08rem;
+      margin: 0;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    #made-by {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin: 48px auto 40px auto;
+      padding: 16px 20px;
+      background: linear-gradient(120deg, rgba(131,110,249,0.13), rgba(151,130,255,0.11));
+      box-shadow: 0 4px 18px 0 rgba(131,110,249,0.10);
+      border-radius: 14px;
+      font-size: 1.13rem;
+      max-width: 400px;
+      width: 100%;
+    }
+    #made-by img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      box-shadow: 0 2px 8px 0 rgba(151,130,255,0.12);
+      object-fit: cover;
+      display: block;
+      background: #fff;
+    }
+    #made-by .made-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    #made-by .heart {
+      color: #f44336;
+      font-size: 1.3em;
+      margin-right: 3px;
+      vertical-align: middle;
+      display: inline-block;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    #made-by .heart:hover {
+      transform: scale(1.15);
+    }
+    #made-by .author-link {
+      color: #f8d210;
+      font-weight: 700;
+      text-decoration: underline;
+      font-size: 1.13rem;
+      margin-left: 3px;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    #made-by .author-link:hover {
+      color: #ffe84d;
+      text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      #made-by {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 4px;
+        max-width: 98vw;
+      }
+      #made-by img {
+        width: 40px;
+        height: 40px;
+      }
+      #made-by .made-text {
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="main-nav" aria-label="Main navigation">
+    <div class="nav-container">
+      <span class="nav-logo">Monad Resources Hub</span>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#learning-hub">Learning Hub</a></li>
+        <li><a href="#ecosystem-directory">Ecosystem</a></li>
+        <li><a href="#dashboards">Dashboards</a></li>
+        <li><a href="#Podcast">Podcast</a></li>
+        <!-- Removed Twitter link -->
+        <li><a href="#meme">Memes</a></li>
+      </ul>
+      <button class="mode-toggle" aria-label="Toggle dark/light mode"><span class="mode-icon">🌙</span></button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="sections-grid">
+
+      <!-- Learning Hub -->
+      <section id="learning-hub" class="fade-section">
+        <h2>Learning Hub</h2>
+        <div class="link-box">
+          <a href="https://hackmd.io/@keone/how-monad-works" target="_blank" aria-label="How Monad Works"><p>How Monad Works </p></a>
+          <a href="https://x.com/category_xyz/status/1907442601822707922" target="_blank" aria-label="Monad BFT explained"><p>Monad BFT explained</p></a>
+          <a href="https://x.com/cryptunez/status/1865077152623788354" target="_blank" aria-label="Who, What, How, Why and When Monad?"><p>Who, What, How, Why and When Monad?</p></a>
+          <a href="https://all-about-monad.vercel.app/" target="_blank" aria-label="All About Monad"><p>All About Monad </p></a>
+        </div>
+      </section>
+
+      <!-- Monad Ecosystem Directory -->
+      <section id="ecosystem-directory" class="fade-section">
+        <h2>Monad Ecosystem Directory</h2>
+        <div class="link-box">
+          <a href="https://www.monadwhisper.xyz/" target="_blank" aria-label="Monad Ecosystem Site"><p>Monad Ecosystem Site</p></a>
+          <a href="https://docs.google.com/spreadsheets/d/1EH4titukHQF8XfSH0dS7sA0PNyNnSI51TusgGSq96TU/edit" target="_blank" aria-label="Monad Ecosystem Sheet"><p>Monad Ecosystem Sheet</p></a>
+          <a href="https://www.monad.xyz/ecosystem" target="_blank" aria-label="Official Monad Directory"><p>Official Monad Directory </p></a>
+        </div>
+      </section>
+
+      <!-- Dashboards -->
+      <section id="dashboards" class="fade-section">
+        <h2>Dashboards</h2>
+        <div class="link-box">
+          <a href="https://www.gmonads.com/" target="_blank" aria-label="Validator Stats"><p>Validator Stats</p></a>
+          <a href="https://nadradar.com/" target="_blank" aria-label="NadRadar: App Dashboard"><p>NadRadar: App Dashboard</p></a>
+          <a href="https://flipsidecrypto.xyz/monadmetrics/nadscope---your-all-in-1-monad-analytics-hub-j1UPgL" target="_blank" aria-label="Nadscope: All-in-One Analytics"><p>Nadscope: All-in-One Analytics </p></a>
+        </div>
+      </section>
+
+      <!-- Podcast -->
+      <section id="Podcast" class="fade-section">
+        <h2>Podcast</h2>
+        <div class="link-box">
+          <a href="https://www.youtube.com/watch?v=YCxOcA3ysX4" target="_blank" aria-label="Monad Testnet Special"><p>Monad Testnet Special</p></a>
+          <a href="https://www.youtube.com/watch?v=HdTg7d5OtkA" target="_blank" aria-label="Monad: Unleashing Parallel Execution on the EVM"><p>Monad: Unleashing Parallel Execution on the EVM</p></a>
+        </div>
+      </section>
+
+      <!-- Removed Twitter section -->
+
+      <!-- Memes -->
+      <section id="meme" class="fade-section">
+        <h2>Memes</h2>
+        <div class="link-box">
+          <a href="https://pimpyourmeme.xyz/" target="_blank" aria-label="Pimp Your Meme"><p>Pimp Your Meme</p></a>
+          <a href="https://t.me/MonadMemeLibrary" target="_blank" aria-label="Monad Meme Library"><p>Monad Meme Library</p></a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Made with by Yash -->
+    <div id="made-by">
+      <img src="https://avatars.githubusercontent.com/u/118990297?v=4" alt="Yash profile picture">
+      <span class="made-text">
+        <span class="heart" title="Made with "></span>
+        <span>Made with ❤ by</span>
+        <a class="author-link" href="https://twitter.com/0x_yash21" target="_blank">Yash</a>
+      </span>
+    </div>
+  </div>
+  <button id="back-to-top" aria-label="Back to top">↑</button>
+  <script>
+    // Dark/Light mode toggle
+    const modeToggle = document.querySelector('.mode-toggle');
+    const modeIcon = document.querySelector('.mode-icon');
+    modeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      if(document.body.classList.contains('dark')) {
+        modeIcon.textContent = '☀';
+      } else {
+        modeIcon.textContent = '🌙';
+      }
+    });
+    // Hamburger menu toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', !expanded);
+    });
+    // Back to top button
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 300) {
+        backToTop.style.display = 'block';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    // Fade-in animation for sections/cards
+    const fadeSections = document.querySelectorAll('.fade-section');
+    const linkBoxes = document.querySelectorAll('.link-box');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    fadeSections.forEach(sec => observer.observe(sec));
+    linkBoxes.forEach(box => observer.observe(box));
+  </script>
+</body>
+</html>
